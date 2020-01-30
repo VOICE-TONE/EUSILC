@@ -1,0 +1,22 @@
+HY030 HOUSEHOLD ID = Personal ID - 2 personal digit in the end
+HY010 Household Gross income
+HY020 Household disposable income
+HY022 Household disposable income before social transfers other than old age and survivors benefits
+HY023 Household disposable income before social transfers including old age and survivors benefits
+
+Personal
+
+PB150 Sex
+PB030 Personal ID
+PB010 Year of the survey
+
+PB140 Year of birth
+
+PB220A Citizenship (primary)
+
+PE040 Highest Edu. Level attained 
+PL040 Employment status
+
+PY200G Gross monthly earning per employees
+
+

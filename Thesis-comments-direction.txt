@@ -1,0 +1,36 @@
+interpretation should take into account difference between countries. Eastern europeen countries have a high Russian influence and many migrants are from Russian
+and are living there since many years and cannot be considered migrants. Consider using the year of arrival.
+
+Uniqueness of household (consider the household ID and personal ID as unique variables)
+EUSILC is pannel interview rotation every 4 quarters.
+
+Countries of interest:
+
+France, Italy, 
+
+Reason for discriminaitng between countries:
+
+- too small sample size (Describe why the sample is not big enough)
+- Language of interview (Inability to speak the language is a reason for dropping from he sample in CZ for example).
+- Justify why the randomness of the sample is biaised due to factors like (language barrier, collective housing (dormitories) are excluded from the Survey...)
+- 
+
+Classification task of household category by OTH or LOC or EU. 
+Hypothesis: Inhabitant of a household are from the same origin.
+
+
+In EUSILC:
+
+- The household classified by the classification of the head of the household ()
+
+- Household gross income average 
+
+- Househoold material deprivation difference between LOC, EU & OTH
+
+### Material deprivation
+
+logreg(Material Deprivation Yes, No) ~ All material deprivation variables, Status LOC, EU & OTH, Income, dummy_variables, combination
+
+Material deprivation could be also an ordinal variable of how many items are missed from the group of 9 (1,2,3,4,5,6,7,8,9)
+
+### 

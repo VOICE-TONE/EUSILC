@@ -1,0 +1,38 @@
+Code,Name,Reason,Category
+RB250,Data status,Source of bias (possible),0
+RB030,Personal ID,Tracking individuals,0
+PL040,Status of employment,Employment status,A
+PL051,Occupation,Employment status,A
+PL200,Number of years spent in regular paid jobs,Employment status,A
+PL015,Whether the person has ever worked,Employment status,A
+RB170,Main activity status,Employment status,A
+RB210,Basic activity status,Employment status,A
+RB080,Year of birth,Grouping & profile,A
+RB090,Sex,Grouping & profile,A
+HY010,Total household income,Income,A
+HY020,Income,Income,A
+HY022,Income,Income,A
+HY023,Income,Income,A
+HY030,Imputed rent,Income,A
+HY050G,Familly allowance,Income,A
+HY070G,Housing allowances,Income,A
+HY081G,Alimonies received ,Income,A
+HY110G,Income received by people aged under 16,Income,A
+HY131G,Alimonies paid,Income,A
+RB010,Year of Survey,Panel Year,A
+RB031,Year of immigration,Local or Foreigner,A1
+PB220A,Citizenship 1,Local or Foreigner,A1
+PB220B,Citizenship 2,Local or Foreigner,A1
+PL060,Number of hours worked per week in main job,Employment status,A2
+PL140,Type of contract,Employment status,A2
+PB210,Country of birth,Local or Foreigner,A2
+PL020,Actively looking for work,Employment status,B
+PL031,Self-defined current economic status,Employment status,B
+PL035,Worked at least one our during the previous week,Employment status,B
+HH060,Current rent,Expenses,B
+HH061,Subjective rent,Expenses,B
+HH070,Total housing cost,Expenses,B
+HH071,Mortgage principal repayment,Expenses,B
+PB190,Marital status,Profile,B
+PB200,Consensual union,Profile,B
+PE040,Highest ISCED attained,Profile,B

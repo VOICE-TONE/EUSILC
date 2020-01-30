@@ -1,0 +1,127 @@
+---
+title: "EUSILC DATA EXPLORATION"
+author: "Roland NGOUYAMSA"
+date: "1/22/2020"
+output: html_document
+---
+
+## Exploratory data analysis
+
+Basic descriptive statistics of the dataset
+
+
+#### Getting meaningful variables to segregate LOC, EU citizens from Foreign citizens.
+The 2 variables of interest here are PB220A (status: Loc, EU or Foreign), PB020 (Country of survey)
+
+
+```{r setup, include=FALSE}
+
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(tidyr)
+library(purrr)
+library(vtree)
+library(knitr)
+
+library(MASS)
+
+path = "C:/Users/Administrator/Documents/MOS/Thesis/data"
+knitr::opts_knit$set(root.dir = "C:/Users/Administrator/Documents/MOS/Thesis/data/")
+
+
+filelist <- list.files(path = path, include.dirs = TRUE, recursive = TRUE)
+
+pattern <- "P_ver|H_ver"
+
+filelist <- filelist[grepl(pattern,filelist)]
+
+
+data <- data.frame()
+
+var <- c("PB010","PB020", "PB220A", "PB150","PB030","PB140","PE040","PL040","PY200G","HB010","HB020", "HB030", "HY010", "HY020", "HY022", "HY023", "HB080")
+
+pvar <- var[1:9]
+hvar <- var[10:length(var)]
+
+pfiles <- filelist[grepl("P_ver", filelist)]
+
+hfiles <- filelist[grepl("H_ver", filelist)]
+
+
+get_data <- function(vect, vars){
+
+### Getting all headers from files and checking for the variable 
+var_inc <- colnames(read.csv(vect[1], nrows = 1, header = T))
+
+### Detecting the variables of interest
+cols <- which(var_inc %in% vars)
+
+### Creating the classes variables that will be the column filter in the read.csv function
+classes <- rep("NULL", times=length(var_inc))
+
+classes[cols] <- c(NA)
+  
+for(i in seq_along(vect)){
+    
+### Read only colums 2 and 32 of the CSV file where the variable are stored
+data <- rbind(data, read.csv(vect[i], colClasses = classes))
+}  
+  
+  return(data)
+  
+}
+
+
+datah <- get_data(vect = hfiles[3], vars = hvar)
+
+datap <- get_data(vect = pfiles[1], vars = pvar)
+
+datap %>% group_by(is.na(PY200G)) %>% summarise(count=n(),median(PY200G, na.rm = T))
+
+datah %>% group_by(is.na(HY022)) %>% summarise(count=n(),median(HY022, na.rm = T))
+
+datah %>% group_by(is.na(HY023)) %>% summarise(count=n(),median(HY023, na.rm = T))
+
+datah %>% group_by(is.na(HY020)) %>% summarise(count=n(),median(HY020, na.rm = T))
+
+```
+
+
+### Summary statistics
+
+Counts per group per country in EUSILC Sample
+
+```{r }
+
+counts <- table(data$PB020, data$PB220A)
+
+counts
+
+```
+
+### Proportion as a total in EU
+
+```{r pressure, echo=FALSE}
+
+data %>% group_by(PB220A) %>% summarise(counts=round(n()*100/sum(counts),2)) %>% arrange(desc(counts))
+
+```
+
+```{r}
+
+data %>% group_by(PB020,PB220A) %>% summarise(counts=n()) %>% arrange(desc(counts), .by_group=TRUE)
+
+
+
+data %>% group_by(PB020) %>% vtree("PB220A")
+
+  vtree(data, "PB220A")
+
+```
+
+
+```{r}
+
+```
+

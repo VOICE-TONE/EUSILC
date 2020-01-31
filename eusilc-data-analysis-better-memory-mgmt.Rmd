@@ -24,13 +24,12 @@ library(purrr)
 library(vtree)
 library(knitr)
 
-library(MASS)
+#library(MASS)
 
-path = "C:/Users/Administrator/Documents/MOS/Thesis/data"
-knitr::opts_knit$set(root.dir = "C:/Users/Administrator/Documents/MOS/Thesis/data/")
+path = "data/"
 
+filelist <- list.files(path = path, full.names = TRUE, recursive = TRUE)
 
-filelist <- list.files(path = path, include.dirs = TRUE, recursive = TRUE)
 
 pattern <- "P_ver|H_ver"
 
@@ -94,7 +93,7 @@ Counts per group per country in EUSILC Sample
 
 ```{r }
 
-counts <- table(data$PB020, data$PB220A)
+counts <- table(data$PB020, datap$PB220A)
 
 counts
 
@@ -104,24 +103,19 @@ counts
 
 ```{r pressure, echo=FALSE}
 
-data %>% group_by(PB220A) %>% summarise(counts=round(n()*100/sum(counts),2)) %>% arrange(desc(counts))
+datap %>% group_by(PB220A) %>% summarise(counts=n()) %>% arrange(desc(counts))
 
 ```
 
 ```{r}
 
-data %>% group_by(PB020,PB220A) %>% summarise(counts=n()) %>% arrange(desc(counts), .by_group=TRUE)
+datap %>% group_by(PB020,PB220A) %>% summarise(counts=n()) %>% arrange(desc(counts), .by_group=TRUE)
 
 
 
-data %>% group_by(PB020) %>% vtree("PB220A")
-
-  vtree(data, "PB220A")
-
-```
+datap %>% group_by(PB020) %>% vtree("PB220A")
 
 
-```{r}
+vtree(datap, "PB220A")
 
 ```
-

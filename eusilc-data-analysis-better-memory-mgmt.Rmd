@@ -24,57 +24,47 @@ library(purrr)
 library(vtree)
 library(knitr)
 
+source("getdata.R")
+
 #library(MASS)
 
-path = "data/"
 
-filelist <- list.files(path = path, full.names = TRUE, recursive = TRUE)
+datap <- get_data(vect = pfiles, vars = pvar)
 
-
-pattern <- "P_ver|H_ver"
-
-filelist <- filelist[grepl(pattern,filelist)]
+#datah <- get_data(vect = hfiles, vars = hvar)
 
 
-data <- data.frame()
+datap <- datap %>% mutate(HB030=as.numeric(strtrim(PB030,nchar(PB030)-2)))
 
-var <- c("PB010","PB020", "PB220A", "PB150","PB030","PB140","PE040","PL040","PY200G","HB010","HB020", "HB030", "HY010", "HY020", "HY022", "HY023", "HB080")
-
-pvar <- var[1:9]
-hvar <- var[10:length(var)]
-
-pfiles <- filelist[grepl("P_ver", filelist)]
-
-hfiles <- filelist[grepl("H_ver", filelist)]
+#data <- full_join(datap, datah, by="HB030")
 
 
-get_data <- function(vect, vars){
 
-### Getting all headers from files and checking for the variable 
-var_inc <- colnames(read.csv(vect[1], nrows = 1, header = T))
+head(datah)
+head(datap)
 
-### Detecting the variables of interest
-cols <- which(var_inc %in% vars)
+#df <- datap %>% group_by(PB010, PB020, HB030) %>% summarise(count=n()) %>% tbl_df
 
-### Creating the classes variables that will be the column filter in the read.csv function
-classes <- rep("NULL", times=length(var_inc))
-
-classes[cols] <- c(NA)
-  
-for(i in seq_along(vect)){
-    
-### Read only colums 2 and 32 of the CSV file where the variable are stored
-data <- rbind(data, read.csv(vect[i], colClasses = classes))
-}  
-  
-  return(data)
-  
-}
+#head(df)
 
 
-datah <- get_data(vect = hfiles[3], vars = hvar)
+```
 
-datap <- get_data(vect = pfiles[1], vars = pvar)
+
+### Summary statistics
+
+Individual countper household
+
+```{r}
+
+datap %>% group_by(PB010, PB020, PB030, HB030) %>% summarise(count=n())
+
+```
+
+
+
+
+```{r}
 
 datap %>% group_by(is.na(PY200G)) %>% summarise(count=n(),median(PY200G, na.rm = T))
 
@@ -87,13 +77,12 @@ datah %>% group_by(is.na(HY020)) %>% summarise(count=n(),median(HY020, na.rm = T
 ```
 
 
-### Summary statistics
 
 Counts per group per country in EUSILC Sample
 
 ```{r }
 
-counts <- table(data$PB020, datap$PB220A)
+counts <- table(datap$PB020, datap$PB220A)
 
 counts
 
